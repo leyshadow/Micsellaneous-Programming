@@ -23,7 +23,7 @@ class player // player object type, has 3 vars
         int USER; // number of which the player is, 1st player, 2nd, 3rd, etc.
         int GUESS; // what they actually guess, user will input this
         int NUMguesses; // how many tries it took that specific player
-
+        string name; // What name player chooses!
 
 };
 
@@ -41,13 +41,18 @@ int main()
     Player2.NUMguesses = 0;
 
 
-    int WINNER; // will be what PLAYER wins the game 1, 2, 3 ,etc
+    string WINNER; // will be the winner's NAME
     int winnerGUESS; // how many guesses it took THAT player
     int currentuser = Player1.USER; // 1, 2, 3, etc. Says which player's turn it is
     int randomGEN = (rand()% 100 + 1); // generate random numb between 100 and 1
 
-    cout << "Player 1 enter a guess b/w 1 and 100: "; // prompt
-    cout << randomGEN;
+    cout << "Player 1 enter your name: ";
+    cin >> Player1.name;
+
+    cout << "Player 2 enter your name: ";
+    cin >> Player2.name;
+
+    cout << Player1.name << " enter a guess b/w 1 and 100: "; // prompt
 
     do // do this each type while statement is true
     {
@@ -55,23 +60,23 @@ int main()
 
         cin >> Player1.GUESS; // player1 enters a guess
         if(Player1.GUESS < randomGEN){ // it is too small
-            cout << "Your number was too small!" << endl;
+            cout << "Your number was too small " << Player1.name << "!" << endl;
             Player1.NUMguesses++; // increment the guesses
             currentuser = Player2.USER; // switch to different user, should make it do (Player1.USER + 1) each time?
-            cout <<"Now player " << currentuser << "'s turn:"; // prompt who's new turn it is
+            cout <<"Now " << Player2.name<< "'s turn:"; // prompt who's new turn it is
         }
         else if(Player1.GUESS > randomGEN){ // ^^^^this time too large number
-            cout << "Your number was too large!" << endl;
+            cout << "Your number was too large " << Player1.name << "!" << endl;
             Player1.NUMguesses++;
             currentuser = Player2.USER;
-            cout <<"Now player " << currentuser << "'s turn:"; // tell what player's turn it now is.
+            cout <<"Now " << Player2.name << "'s turn: "; // tell what player's turn it now is.
         }
 
 
         else if(Player1.GUESS == randomGEN){ // user got it right!
-            cout << "You've won the GAME!!"; // prompt
+            cout << "You've won the GAME " << Player1.name << "!"; // prompt
             Player1.NUMguesses++; // increment guess for last time
-            WINNER = Player1.USER; // set the playernumber to WINNER, easier to display
+            WINNER = Player1.name; // set the playernumber to WINNER, easier to display
             winnerGUESS = Player1.NUMguesses; // how many guesses it took
             break; //exit our do first do loop, and the next do loop will be false.
         }
@@ -82,26 +87,27 @@ int main()
             cin >> Player2.GUESS; // ask for user's guess each time
             if(Player2.GUESS < randomGEN) // same as above ^^
         {
-            cout << "Your number was too small!" << endl;
+            cout << "Your number was too small " << Player2.name << "!" << endl;
             Player2.NUMguesses++;
             currentuser = Player1.USER;
-            cout <<"Now player " << currentuser << "'s turn:";
+            cout <<"Now " << Player1.name << "'s turn: ";
         }
 
         else if(Player2.GUESS > randomGEN)
         {
-            cout << "Your number was too large!" << endl;
+            cout << "Your number was too large " << Player2.name << "!" << endl;
             Player2.NUMguesses++;
             currentuser = Player1.USER;
-            cout <<"Now player " << currentuser << "'s turn:";
+            cout <<"Now " << Player1.name << "'s turn:";
+
         }
 
 
         else if(Player2.GUESS == randomGEN)
         {
-            cout << "You've won the GAME!!";
+            cout << "You've won the GAME " << Player2.name << "!!!";
             Player2.NUMguesses++;
-            WINNER = Player2.USER;
+            WINNER = Player2.name;
             winnerGUESS = Player2.NUMguesses;
             break;
         }
@@ -112,7 +118,7 @@ int main()
     }while(Player1.GUESS != randomGEN && currentuser == Player1.USER); // this will only happen once, since current user switches each time there is a wrong guess
 
 
-cout << "\nPlayer " << WINNER << " has won the game in " << (winnerGUESS) << " guesses!"; // final prompt telling who has won, etc.
+cout << "\n" << WINNER << " has won the game in " << (winnerGUESS) << " guesses!"; // final prompt telling who has won, etc.
 
     return 0;
 }
